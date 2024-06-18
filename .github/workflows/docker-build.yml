@@ -84,9 +84,10 @@ jobs:
         run: |
           docker build --file Dockerfile --build-arg BASE_IMAGE=${{ matrix.base_image }} -t $IMAGE_TAG .
           docker push $IMAGE_TAG
+        continue-on-error: ${{ matrix.image_name == 'node' || matrix.image_name == 'golang' }}
 
       - name: Create GitHub Release
-        if: success()
+        if: success() && github.event_name == 'push'
         id: create_release
         uses: actions/create-release@v1
         env:
