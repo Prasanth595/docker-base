@@ -167,6 +167,7 @@ jobs:
         run: |
           docker build --file Dockerfile --build-arg BASE_IMAGE=rust:latest -t ${{ secrets.DOCKER_USERNAME }}/base-rust:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/base-rust:latest
+
       - name: Create GitHub Release
         if: success()
         uses: softprops/action-gh-release@v1
