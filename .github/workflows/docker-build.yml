@@ -77,11 +77,110 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/base-${{ matrix.image_name }}:latest
-          build-args: |
-            BASE_IMAGE=${{ matrix.base_image }}
+      - name: Build and push Docker image - Alpine
+        if: matrix.image_name == 'alpine'
+        run: |
+          docker build --file Dockerfile --build-arg BASE_IMAGE=alpine:latest -t ${{ secrets.DOCKER_USERNAME }}/base-alpine:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/base-alpine:latest
+
+      - name: Build and push Docker image - Ubuntu
+        if: matrix.image_name == 'ubuntu'
+        run: |
+          docker build --file Dockerfile --build-arg BASE_IMAGE=ubuntu:latest -t ${{ secrets.DOCKER_USERNAME }}/base-ubuntu:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/base-ubuntu:latest
+
+      - name: Build and push Docker image - Debian
+        if: matrix.image_name == 'debian'
+        run: |
+          docker build --file Dockerfile --build-arg BASE_IMAGE=debian:latest -t ${{ secrets.DOCKER_USERNAME }}/base-debian:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/base-debian:latest
+
+      - name: Build and push Docker image - CentOS
+        if: matrix.image_name == 'centos'
+        run: |
+          docker build --file Dockerfile --build-arg BASE_IMAGE=centos:latest -t ${{ secrets.DOCKER_USERNAME }}/base-centos:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/base-centos:latest
+
+      - name: Build and push Docker image - Fedora
+        if: matrix.image_name == 'fedora'
+        run: |
+          docker build --file Dockerfile --build-arg BASE_IMAGE=fedora:latest -t ${{ secrets.DOCKER_USERNAME }}/base-fedora:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/base-fedora:latest
+
+      - name: Build and push Docker image - BusyBox
+        if: matrix.image_name == 'busybox'
+        run: |
+          docker build --file Dockerfile --build-arg BASE_IMAGE=busybox:latest -t ${{ secrets.DOCKER_USERNAME }}/base-busybox:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/base-busybox:latest
+
+      - name: Build and push Docker image - Node.js
+        if: matrix.image_name == 'node'
+        run: |
+          docker build --file Dockerfile --build-arg BASE_IMAGE=node:latest -t ${{ secrets.DOCKER_USERNAME }}/base-node:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/base-node:latest
+
+      - name: Build and push Docker image - Python
+        if: matrix.image_name == 'python'
+        run: |
+          docker build --file Dockerfile --build-arg BASE_IMAGE=python:latest -t ${{ secrets.DOCKER_USERNAME }}/base-python:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/base-python:latest
+
+      - name: Build and push Docker image - OpenJDK
+        if: matrix.image_name == 'openjdk'
+        run: |
+          docker build --file Dockerfile --build-arg BASE_IMAGE=openjdk:latest -t ${{ secrets.DOCKER_USERNAME }}/base-openjdk:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/base-openjdk:latest
+
+      - name: Build and push Docker image - Golang
+        if: matrix.image_name == 'golang'
+        run: |
+          docker build --file Dockerfile --build-arg BASE_IMAGE=golang:latest -t ${{ secrets.DOCKER_USERNAME }}/base-golang:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/base-golang:latest
+
+      - name: Build and push Docker image - Nginx
+        if: matrix.image_name == 'nginx'
+        run: |
+          docker build --file Dockerfile --build-arg BASE_IMAGE=nginx:latest -t ${{ secrets.DOCKER_USERNAME }}/base-nginx:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/base-nginx:latest
+
+      - name: Build and push Docker image - Redis
+        if: matrix.image_name == 'redis'
+        run: |
+          docker build --file Dockerfile --build-arg BASE_IMAGE=redis:latest -t ${{ secrets.DOCKER_USERNAME }}/base-redis:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/base-redis:latest
+
+      - name: Build and push Docker image - MySQL
+        if: matrix.image_name == 'mysql'
+        run: |
+          docker build --file Dockerfile --build-arg BASE_IMAGE=mysql:latest -t ${{ secrets.DOCKER_USERNAME }}/base-mysql:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/base-mysql:latest
+
+      - name: Build and push Docker image - PostgreSQL
+        if: matrix.image_name == 'postgres'
+        run: |
+          docker build --file Dockerfile --build-arg BASE_IMAGE=postgres:latest -t ${{ secrets.DOCKER_USERNAME }}/base-postgres:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/base-postgres:latest
+
+      - name: Build and push Docker image - MongoDB
+        if: matrix.image_name == 'mongo'
+        run: |
+          docker build --file Dockerfile --build-arg BASE_IMAGE=mongo:latest -t ${{ secrets.DOCKER_USERNAME }}/base-mongo:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/base-mongo:latest
+
+      - name: Build and push Docker image - PHP
+        if: matrix.image_name == 'php'
+        run: |
+          docker build --file Dockerfile --build-arg BASE_IMAGE=php:latest -t ${{ secrets.DOCKER_USERNAME }}/base-php:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/base-php:latest
+
+      - name: Build and push Docker image - Ruby
+        if: matrix.image_name == 'ruby'
+        run: |
+          docker build --file Dockerfile --build-arg BASE_IMAGE=ruby:latest -t ${{ secrets.DOCKER_USERNAME }}/base-ruby:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/base-ruby:latest
+
+      - name: Build and push Docker image - Rust
+        if: matrix.image_name == 'rust'
+        run: |
+          docker build --file Dockerfile --build-arg BASE_IMAGE=rust:latest -t ${{ secrets.DOCKER_USERNAME }}/base-rust:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/base-rust:latest
