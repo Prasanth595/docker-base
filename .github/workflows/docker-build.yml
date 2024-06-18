@@ -69,3 +69,17 @@ jobs:
         run: |
           docker build --file Dockerfile --build-arg BASE_IMAGE=${{ matrix.base_image }} -t ${{ secrets.DOCKER_USERNAME }}/base-${{ matrix.image_name }}:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/base-${{ matrix.image_name }}:latest
+
+      - name: Create GitHub Release
+        if: success() && github.event_name == 'push'
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ github.run_number }}-${{ matrix.image_name }}
+          release_name: Release ${{ matrix.image_name }} v${{ github.run_number }}
+          body: |
+            Release of ${{ matrix.image_name }} Docker image.
+          draft: false
+          prerelease: false
