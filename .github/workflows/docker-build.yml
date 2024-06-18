@@ -14,7 +14,8 @@ jobs:
 
     strategy:
       matrix:
-        image: [alpine, ubuntu, debian]
+        base_image: [alpine:latest, ubuntu:latest, debian:latest, centos:latest]
+        image_name: [alpine, ubuntu, debian, centos]
 
     steps:
       - name: Checkout repository
@@ -32,6 +33,8 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
-          context: ./${{ matrix.image }}
+          context: .
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/base-${{ matrix.image }}:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/base-${{ matrix.image_name }}:latest
+          build-args: |
+            BASE_IMAGE=${{ matrix.base_image }}
