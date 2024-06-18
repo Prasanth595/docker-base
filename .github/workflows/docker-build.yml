@@ -14,8 +14,15 @@ jobs:
 
     strategy:
       matrix:
-        base_image: [alpine:latest, ubuntu:latest, debian:latest, centos:latest]
-        image_name: [alpine, ubuntu, debian, centos]
+        include:
+          - base_image: alpine:latest
+            image_name: alpine
+          - base_image: ubuntu:latest
+            image_name: ubuntu
+          - base_image: debian:latest
+            image_name: debian
+          - base_image: centos:latest
+            image_name: centos
 
     steps:
       - name: Checkout repository
