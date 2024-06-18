@@ -23,6 +23,46 @@ jobs:
             image_name: debian
           - base_image: centos:latest
             image_name: centos
+          - base_image: fedora:latest
+            image_name: fedora
+          - base_image: busybox:latest
+            image_name: busybox
+          - base_image: node:latest
+            image_name: node
+          - base_image: python:latest
+            image_name: python
+          - base_image: openjdk:latest
+            image_name: openjdk
+          - base_image: golang:latest
+            image_name: golang
+          - base_image: nginx:latest
+            image_name: nginx
+          - base_image: redis:latest
+            image_name: redis
+          - base_image: mysql:latest
+            image_name: mysql
+          - base_image: postgres:latest
+            image_name: postgres
+          - base_image: mongo:latest
+            image_name: mongo
+          - base_image: php:latest
+            image_name: php
+          - base_image: ruby:latest
+            image_name: ruby
+          - base_image: rust:latest
+            image_name: rust
+          - base_image: elixir:latest
+            image_name: elixir
+          - base_image: mcr.microsoft.com/dotnet/runtime:latest
+            image_name: dotnet-runtime
+          - base_image: amazoncorretto:latest
+            image_name: amazoncorretto
+          - base_image: oraclelinux:latest
+            image_name: oraclelinux
+          - base_image: tensorflow/tensorflow:latest
+            image_name: tensorflow
+          - base_image: eclipse-temurin:latest
+            image_name: eclipse-temurin
 
     steps:
       - name: Checkout repository
