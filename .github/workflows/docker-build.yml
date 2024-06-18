@@ -1,4 +1,4 @@
-name: Build, Push Docker Images, and Create Release
+name: Build and Push Docker Images
 
 on:
   push:
@@ -51,18 +51,6 @@ jobs:
             image_name: ruby
           - base_image: rust:latest
             image_name: rust
-          - base_image: elixir:latest
-            image_name: elixir
-          - base_image: mcr.microsoft.com/dotnet/runtime:latest
-            image_name: dotnet-runtime
-          - base_image: amazoncorretto:latest
-            image_name: amazoncorretto
-          - base_image: oraclelinux:latest
-            image_name: oraclelinux
-          - base_image: tensorflow/tensorflow:latest
-            image_name: tensorflow
-          - base_image: eclipse-temurin:latest
-            image_name: eclipse-temurin
 
     steps:
       - name: Checkout repository
@@ -77,25 +65,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and Push Docker image
-        id: docker_build
-        env:
-          IMAGE_TAG: ${{ secrets.DOCKER_USERNAME }}/base-${{ matrix.image_name }}:latest
+      - name: Build and push Docker image - ${{ matrix.image_name }}
         run: |
-          docker build --file Dockerfile --build-arg BASE_IMAGE=${{ matrix.base_image }} -t $IMAGE_TAG .
-          docker push $IMAGE_TAG
-        continue-on-error: ${{ matrix.image_name == 'node' || matrix.image_name == 'golang' }}
-
-      - name: Create GitHub Release
-        if: success() && github.event_name == 'push'
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v${{ github.run_number }}-${{ matrix.image_name }}
-          release_name: Release ${{ matrix.image_name }} v${{ github.run_number }}
-          body: |
-            Release of ${{ matrix.image_name }} Docker image.
-          draft: false
-          prerelease: false
+          docker build --file Dockerfile --build-arg BASE_IMAGE=${{ matrix.base_image }} -t ${{ secrets.DOCKER_USERNAME }}/base-${{ matrix.image_name }}:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/base-${{ matrix.image_name }}:latest
